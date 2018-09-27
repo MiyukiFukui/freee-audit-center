@@ -15,17 +15,22 @@ RedashResults.prototype.getValues = function(sheetName){
     return this.Spreadsheet.getSheetByName(sheetName).getDataRange().getValues();
   }
 }
-RedashResults.prototype.getEvidences = function(sheetName,cause){
-  var i;
+RedashResults.prototype.getEvidences = function(sheetName,cause,detail){=
+  var headers = { 'comapny_id' : undefined };
+
   var data = this.getValues(sheetName);
   data[0].forEach(function(header,index){
-    if(header == 'company_id'){ i = index; }
+    if(header == 'company_id'){ headers.company_id = index; }
+    if(header == detail ){ headers[detail] = index; }
   });
-  
-  if(i !== undefined){
-    return data.slice(1).map(function(record){ return [record[i],cause]; })
+
+  if(headers.comapny_id !== undefined){
+    return data.slice(1).map(function(record){
+      var detail = headers[detail] ? record[headers[detail]] : '';
+      return [record[headers.comapny_id],cause,detail];
+    })
   } else {
-    return false
+    return false;
   }
 }
 
