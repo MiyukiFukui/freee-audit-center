@@ -19,6 +19,7 @@ RedashResults.prototype.getEvidences = function(sheetName,cause,detail){=
   var headers = { 'comapny_id' : undefined };
 
   var data = this.getValues(sheetName);
+  
   data[0].forEach(function(header,index){
     if(header == 'company_id'){ headers.company_id = index; }
     if(header == detail ){ headers[detail] = index; }
